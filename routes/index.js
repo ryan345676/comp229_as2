@@ -4,7 +4,7 @@ var express = require("express");
 var router = express.Router();
 
 mongoose.connect(
-  "mongodb+srv://alexwong:a123456@cluster1.z07ra.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb+srv://comp229:ryan2002@cluster0.bcesnv8.mongodb.net/?retryWrites=true&w=majority"
 );
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -45,6 +45,12 @@ router.get("/register", function (req, res, next) {
 });
 
 var business = require("../models/businessList");
+ 
+// business.create({contactName:"test",contactNumber:"98765432",contactEmail:"test@gmail.com"});
+// business.create({contactName:"test1",contactNumber:"9899432",contactEmail:"test1@gmail.com"});
+// business.create({contactName:"ryan",contactNumber:"98765432",contactEmail:"ryan@gmail.com"});
+// business.create({contactName:"john smith",contactNumber:"89894",contactEmail:"st@gmail.com"});
+// business.create({contactName:"hihi",contactNumber:"98765432",contactEmail:"tt@gmail.com"});
 
 router.get("/businessContact", function (req, res, next) {
   business.find((err, list) => {
@@ -105,13 +111,14 @@ router.get("/delete/:id", (req, res, next) => {
   });
 });
 
-const User = require("../models/user");
+let User = require("../models/user");
 router.post("/login", function (req, res, next) {
   console.log(req.body);
   const user = User.findOne({ username: req.body.username });
   if ((user.password = req.body.password)) {
     res.redirect("/businessContact");
   } else {
+    res.statusMessage("Incorrect Login Info, PLEASE TRY AGAIN!")
     res.redirect("/login");
   }
 });
@@ -119,12 +126,13 @@ router.post("/login", function (req, res, next) {
 let user = require("../models/user");
 
 router.post("/register", (req, res, next) => {
+  console.log(req.body);
   let newUser = user({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   });
-  user.create(newUser, (err, _) => {
+  user.create(newUser, (err, user) => {
     if (err) {
       console.log(err);
       res.end(err);
