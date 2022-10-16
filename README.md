@@ -8,5 +8,5 @@ Can use below login info to login :)
 HEROKU LINK:
 https://comp229assignment2ryan.herokuapp.com/
 
-YIUTUBE LINK:
+YOUTUBE LINK:
 https://youtu.be/ap97ekgpVIY
